@@ -1,3 +1,5 @@
-altair
-pandas
 streamlit
+yfinance
+requests
+vaderSentiment
+python-dotenv

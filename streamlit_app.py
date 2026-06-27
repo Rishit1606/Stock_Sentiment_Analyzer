@@ -12,7 +12,7 @@ analyzer = SentimentIntensityAnalyzer()
 
 def get_news(ticker):
     # NewsAPI has this format for URL
-    url = f"https://newsapi.org/v2/everything?q={company_name}+stock+market&language=en&sortBy=publishedAt&apiKey={NEWS_API_KEY}"
+    url = f"https://newsapi.org/v2/everything?q={ticker}+stock+market&language=en&sortBy=publishedAt&apiKey={NEWS_API_KEY}"
 
     # gets every news regarding the searched Ticker
     response = requests.get(url)
@@ -40,9 +40,8 @@ try:
         with st.spinner("Fetching data..."):
     
             stock = yf.Ticker(ticker)
-            company_name = stock.info["longName"] 
             history = stock.history(period="1mo")
-            articles = get_news(company_name)
+            articles = get_news(ticker)
             sentiment_score = get_sentiment(articles)
 
 

@@ -37,38 +37,38 @@ ticker = st.text_input("Stock Ticker (e.g. AAPL, TSLA, NVDA)").upper()
 
 try:
     if st.button("Search"):
-        st.write(f"Searching for {ticker}...")
+        with st.spinner("Fetching data..."):
+    
+            stock = yf.Ticker(ticker)
+            company_name = stock.info["longName"] 
+            history = stock.history(period="1mo")
+            articles = get_news(company_name)
+            sentiment_score = get_sentiment(articles)
 
-        stock = yf.Ticker(ticker)
-        company_name = stock.info["longName"] 
-        history = stock.history(period="1mo")
-        articles = get_news(company_name)
-        sentiment_score = get_sentiment(articles)
 
+            if sentiment_score > 0.05:
+                st.subheader(f"{ticker} - Last 30 days 🟢 Bullish")
+            elif 0.05 >= sentiment_score >= -0.05:
+                st.subheader(f"{ticker} - Last 30 days 🟡 Neutral")
 
-        if sentiment_score > 0.05:
-            st.subheader(f"{ticker} - Last 30 days 🟢 Bullish")
-        elif 0.05 >= sentiment_score >= -0.05:
-            st.subheader(f"{ticker} - Last 30 days 🟡 Neutral")
+            elif sentiment_score < -0.05:
+                st.subheader(f"{ticker} - Last 30 days 🔴 Bearish")
 
-        elif sentiment_score < -0.05:
-            st.subheader(f"{ticker} - Last 30 days 🔴 Bearish")
+            st.line_chart(history["Close"])
 
-        st.line_chart(history["Close"])
+            
+            st.write(f"Sentiment Score: {round(sentiment_score, 2)}")
 
-        
-        st.write(f"Sentiment Score: {round(sentiment_score, 2)}")
-
-        st.subheader("Latest News")
-        for article in articles:
-            score = analyzer.polarity_scores(article["title"])["compound"]
-            if score > 0.05:
-                emoji = "🟢"
-            elif score < -0.05:
-                emoji = "🔴"
-            else:
-                emoji = "🟡"
-            st.write(f"{emoji} [{article['title']}]({article['url']})")
+            st.subheader("Latest News")
+            for article in articles:
+                score = analyzer.polarity_scores(article["title"])["compound"]
+                if score > 0.05:
+                    emoji = "🟢"
+                elif score < -0.05:
+                    emoji = "🔴"
+                else:
+                    emoji = "🟡"
+                st.write(f"{emoji} [{article['title']}]({article['url']})")
 
 except KeyError:
     st.error("Invalid ticker. Please try again.")

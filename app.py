@@ -38,11 +38,20 @@ if st.button("Search"):
 
     stock = yf.Ticker(ticker)
     history = stock.history(period="1mo")
-
-    st.subheader(f"{ticker} - Last 30 days")
-    st.line_chart(history["Close"])
-
     articles = get_news(ticker)
     sentiment_score = get_sentiment(articles)
-    st.write(f"Sentiment Score: {sentiment_score}")
+
+
+    if sentiment_score > 0.05:
+        st.subheader(f"{ticker} - Last 30 days 🟢 Bullish")
+    elif 0.05 >= sentiment_score >= -0.05:
+        st.subheader(f"{ticker} - Last 30 days 🟡 Neutral")
+
+    elif sentiment_score < -0.05:
+        st.subheader(f"{ticker} - Last 30 days 🔴 Bearish")
+
+    st.line_chart(history["Close"])
+
+    
+    st.write(f"Sentiment Score: {round(sentiment_score, 2)}")
 

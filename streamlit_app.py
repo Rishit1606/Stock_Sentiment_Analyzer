@@ -1,37 +1,14 @@
 import streamlit as st  # For UI
 import requests     # helps make HTTP calls from code
-import yfinance as yf 
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from dotenv import load_dotenv
 import os
-
 load_dotenv()
+
+
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
-ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY")
 
 analyzer = SentimentIntensityAnalyzer()
-
-# def get_stock_data(ticker):
-#     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={ALPHA_VANTAGE_KEY}"
-#     response = requests.get(url)
-#     data = response.json()
-
-#     if "Time Series (Daily)" not in data:
-#         st.error(f"API Error: {data}")
-#         st.stop()
-
-       
-#     # Extract daily closing prices
-#     time_series = data["Time Series (Daily)"]
-#     dates = list(time_series.keys())[:30]  # last 30 days
-#     closes = [float(time_series[date]["4. close"]) for date in dates]
-    
-#     return dates, closes
-
-def get_stock_data(ticker):
-    stock = yf.Ticker(ticker)
-    history = stock.history(period="1mo")
-    return history
 
 
 def get_news(ticker):
@@ -62,8 +39,6 @@ ticker = st.text_input("Stock Ticker (e.g. AAPL, TSLA, NVDA)").upper()
 try:
     if st.button("Search"):
         with st.spinner("Fetching data..."):
-    
-            history = get_stock_data(ticker)
             
             articles = get_news(ticker)
             sentiment_score = get_sentiment(articles)
@@ -76,8 +51,6 @@ try:
 
             elif sentiment_score < -0.05:
                 st.subheader(f"{ticker} - Last 30 days 🔴 Bearish")
-
-            st.line_chart(history["Close"])
 
             
             st.write(f"Sentiment Score: {round(sentiment_score, 2)}")

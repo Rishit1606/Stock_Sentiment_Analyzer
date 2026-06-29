@@ -1,23 +1,19 @@
+---
+title: Stock Sentiment Analyzer
+emoji: 📈
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
 # Stock Sentiment Analyzer 🚀
 
 ## A web app that performs analysis on real-time stock news to determine whether a stock is Bullish, Neutral, or Bearish, helping investors make informed decisions.
 
 ## 📌 Overview
 
-this project pulls real time stock news using NewsAPI, forms a valuable sentiment using the SentimentIntensityAnalyzer and gives the user whether the market is Bullish, Neutral, or Bearish on that stock helping investors make sound decisions on the basis current market sentiment
-
-colorFrom: red
-colorTo: red
-sdk: docker
-app_port: 8501
-tags:
-
-- streamlit
-  pinned: false
-  short_description: Streamlit template space
-  license: mit
-
----
+## this project pulls real time stock news using NewsAPI, forms a valuable sentiment using the SentimentIntensityAnalyzer and gives the user whether the market is Bullish, Neutral, or Bearish on that stock
 
 # Welcome to Streamlit!
 

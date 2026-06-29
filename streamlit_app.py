@@ -15,7 +15,11 @@ def get_stock_data(ticker):
     response = requests.get(url)
     data = response.json()
 
-    print(data)    
+    if "Time Series (Daily)" not in data:
+        st.error(f"API Error: {data}")
+        st.stop()
+
+       
     # Extract daily closing prices
     time_series = data["Time Series (Daily)"]
     dates = list(time_series.keys())[:30]  # last 30 days

@@ -1,23 +1,45 @@
----
-title: Stock Sentiment Analyzer
-emoji: 📈
-colorFrom: green
-colorTo: blue
-sdk: docker
-pinned: false
----
-
 # Stock Sentiment Analyzer 🚀
 
-## A web app that performs analysis on real-time stock news to determine whether a stock is Bullish, Neutral, or Bearish, helping investors make informed decisions.
+A web app that performs analysis on real-time stock news to determine whether a stock is Bullish, Neutral, or Bearish, helping investors make informed decisions.
 
 ## 📌 Overview
 
-## this project pulls real time stock news using NewsAPI, forms a valuable sentiment using the SentimentIntensityAnalyzer and gives the user whether the market is Bullish, Neutral, or Bearish on that stock
+This project pulls real time stock news using NewsAPI, forms a valuable sentiment using the SentimentIntensityAnalyzer and gives the user whether the market is Bullish, Neutral, or Bearish on that stock
 
-# Welcome to Streamlit!
+## Live demo
 
-Edit `/src/streamlit_app.py` to customize this app to your heart's desire. :heart:
+[Stock Sentiment Analyzer](https://stock-sentiment-analyzer-x41c.onrender.com/)
 
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+## Features
+
+- Real-time news sentiment analysis for any stock ticker
+- Classifies sentiment as 🟢 Bullish, 🟡 Neutral, or 🔴 Bearish
+- Displays latest news headlines with individual sentiment scores
+- Clickable headlines linking to full articles
+
+## How it Works
+
+1. User enters a stock ticker (e.g. AAPL, TSLA)
+2. App fetches latest news from NewsAPI
+3. VADER sentiment analysis runs on each headline
+4. Average compound score determines overall market sentiment
+5. Results displayed with emoji indicators
+
+## Limitations
+
+- VADER lacks financial context (e.g. "rate cuts" may be misclassified)
+- NewsAPI free tier limited to 100 requests/day
+- Stock price chart temporarily removed due to API constraints
+
+## Future Improvements
+
+- Upgrade to FinBERT for finance-aware sentiment analysis
+- Add stock price chart using a reliable financial data API
+- Add caching to reduce API calls
+
+## How to Run Locally
+
+1. Clone the repo
+2. Install dependencies: `pip install -r requirements.txt`
+3. Add your API keys to a `.env` file:
+4. Run: `streamlit run streamlit_app.py`

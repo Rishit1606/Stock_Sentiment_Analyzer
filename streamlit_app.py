@@ -14,7 +14,8 @@ def get_stock_data(ticker):
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={ALPHA_VANTAGE_KEY}"
     response = requests.get(url)
     data = response.json()
-    
+
+    print(data)    
     # Extract daily closing prices
     time_series = data["Time Series (Daily)"]
     dates = list(time_series.keys())[:30]  # last 30 days
